@@ -6,14 +6,28 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 public class GuessViewModel extends ViewModel {
+    private boolean isInitialed = false;
     private int secret = 0;
     private MutableLiveData<Integer> counter = new MutableLiveData<>();
-    private MutableLiveData<Integer> countDown = new MutableLiveData<>();
+    private MutableLiveData<Integer> timer = new MutableLiveData<>();
     private MutableLiveData<String> message = new MutableLiveData<>();
+
+    public void initial() {
+        //it will be trigger in onCreate(),
+        // to avoid do the initial function twice while the activity is re-created for a configuration change(onSaveInstanceState() ->  onCreate())
+        if (isInitialed)
+            return;
+
+        secret = new Random().nextInt(10)+1;
+        counter.setValue(0);
+        timer.setValue(0);
+        isInitialed = true;
+    }
 
     public void reset() {
         secret = new Random().nextInt(10)+1;
         counter.setValue(0);
+        timer.setValue(0);
     }
 
     public void setNumber(int value) {
@@ -40,7 +54,7 @@ public class GuessViewModel extends ViewModel {
         return counter;
     }
 
-    public MutableLiveData<Integer> getCountDown() {
-        return countDown;
+    public MutableLiveData<Integer> getTimer() {
+        return timer;
     }
 }
