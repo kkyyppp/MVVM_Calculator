@@ -33,10 +33,10 @@ public class GuessViewModel extends ViewModel {
     public void setNumber(int value) {
 
         String msg = "Yes, you got it";
-        if (value > secret) {
+        if (value < secret) {
             msg = "smaller";
         }
-        else if (value < secret) {
+        else if (value > secret) {
             msg = "bigger";
         }
 
